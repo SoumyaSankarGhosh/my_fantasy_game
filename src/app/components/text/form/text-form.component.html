@@ -1,0 +1,77 @@
+<section class="content">
+    <div class="box box-default" *ngIf="form_setup">
+        <div class="box-header with-border">
+        <h3 class="box-title">Text</h3>
+        </div>
+        
+        <form role="form" [formGroup]="textForm" (ngSubmit)="submit()">
+            <div class="box-body">
+                <div class="form-group">
+                    <label for="exampleInputEmail1" [ngStyle]="{'color':textForm.controls.text_category_id.errors && textForm.controls.text_category_id.errors.required && isSubmited?'red':''}">Text Category</label>
+                    <select formControlName="text_category_id" class="form-control" [ngStyle]="{'border-color':textForm.controls.text_category_id.errors && textForm.controls.text_category_id.errors.required && isSubmited?'red':''}">
+                        <option value="">Select Text Category</option>
+                        <option *ngFor="let data of text_categories" [value]="data.id">{{data.name}}</option>
+                    </select>
+                    <span *ngIf="textForm.controls.text_category_id.errors && textForm.controls.text_category_id.errors.required && isSubmited" [ngStyle]="{'float':'pull-right','color':'red'}" >
+                        Text Category is required!
+                    </span>
+                </div>
+
+                <div class="form-group">
+                    <label for="exampleInputEmail1" [ngStyle]="{'color':textForm.controls.content.errors && textForm.controls.content.errors.required && isSubmited?'red':''}">Content</label>
+                    <angular-editor formControlName="content" [config]="config"></angular-editor>
+                    <!-- <textarea  class="form-control" formControlName="content" [ngStyle]="{'border-color':textForm.controls.content.errors && textForm.controls.content.errors.required && isSubmited?'red':''}"></textarea>
+                    <span *ngIf="textForm.controls.content.errors && textForm.controls.content.errors.required && isSubmited" [ngStyle]="{'float':'pull-right','color':'red'}" >
+                        Content is required!
+                    </span> -->
+                </div>
+
+                <div class="form-group">
+                    <label for="exampleInputEmail1" [ngStyle]="{'color':textForm.controls.language.errors && textForm.controls.language.errors.required && isSubmited?'red':''}">Language</label>
+                    <select formControlName="language" class="form-control" [ngStyle]="{'border-color':textForm.controls.language.errors && textForm.controls.language.errors.required && isSubmited?'red':''}">
+                        <option value="">Select Language</option>
+                        <option value="English">English</option>
+                        <option value="Hindi">Hindi</option>
+                    </select>
+                    <span *ngIf="textForm.controls.language.errors && textForm.controls.language.errors.required && isSubmited" [ngStyle]="{'float':'pull-right','color':'red'}" >
+                        Language is required!
+                    </span>
+                </div>
+                
+
+                <div class="form-group">
+                    <label for="exampleInputEmail1">Point</label>
+                    <input type="text" class="form-control" formControlName="point">
+                    <span *ngIf="textForm.controls.point.errors && textForm.controls.point.errors.required && isSubmited" [ngStyle]="{'float':'pull-right','color':'red'}" >
+                        Point is required!
+                    </span>
+                </div>
+
+                <label for="exampleInputEmail1" [ngStyle]="{'color':textForm.controls.is_trending.errors && textForm.controls.is_trending.errors.required && isSubmited?'red':''}">Is Trending</label>
+                <div class="radio">
+                    <label>
+                      <input type="radio" value="1"  formControlName="is_trending">Yes
+                    </label>&nbsp;&nbsp;
+                    <label>
+                        <input type="radio" value="0"  formControlName="is_trending"> No
+                    </label>
+                    <span *ngIf="textForm.controls.is_trending.errors && textForm.controls.is_trending.errors.required && isSubmited" [ngStyle]="{'float':'pull-right','color':'red'}" >
+                        <br>Is Trending is required!
+                    </span>
+                </div>
+                
+
+                <input type="hidden" class="form-control" formControlName="user_id">
+                <input type="hidden" class="form-control" formControlName="id"><br>
+                
+
+                
+            </div>
+            <div class="box-footer">
+                <button type="submit" class="btn btn-primary">Submit</button>
+            </div>
+        </form>
+    </div>   
+</section>  
+
+

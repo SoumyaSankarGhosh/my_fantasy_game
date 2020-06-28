@@ -1,0 +1,102 @@
+<section class="content">
+    <div class="box box-default" *ngIf="form_setup">
+        <div class="box-header with-border">
+        <h3 class="box-title">Video</h3>
+        </div>
+        
+        <form role="form" [formGroup]="videoForm" (ngSubmit)="submit()">
+            <div class="box-body">
+
+                <div class="form-group">
+                    <label for="exampleInputEmail1" [ngStyle]="{'color':videoForm.controls.name.errors && videoForm.controls.name.errors.required && isSubmited?'red':''}">Name</label>
+                    <input type="text" class="form-control" formControlName="name">
+                    <span *ngIf="videoForm.controls.name.errors && videoForm.controls.name.errors.required && isSubmited" [ngStyle]="{'float':'pull-right','color':'red'}" >
+                        Name is required!
+                    </span>
+                </div>
+
+                <div class="form-group">
+                    <label for="exampleInputEmail1" [ngStyle]="{'color':videoForm.controls.time.errors && videoForm.controls.time.errors.required && isSubmited?'red':''}">Time</label>
+                    <timepicker formControlName="time" [showMeridian]=isMeridian showSeconds=true></timepicker>
+                    <span *ngIf="videoForm.controls.time.errors && videoForm.controls.time.errors.required && isSubmited" [ngStyle]="{'float':'pull-right','color':'red'}" >
+                        Time is required!
+                    </span>
+                </div>    
+
+                <div class="form-group">
+                    <label for="exampleInputEmail1" [ngStyle]="{'color':videoForm.controls.video_category_id.errors && videoForm.controls.video_category_id.errors.required && isSubmited?'red':''}">Video Category</label>
+                    <select formControlName="video_category_id" class="form-control" [ngStyle]="{'border-color':videoForm.controls.video_category_id.errors && videoForm.controls.video_category_id.errors.required && isSubmited?'red':''}">
+                        <option value="">Select Video Category</option>
+                        <option *ngFor="let data of video_categories" [value]="data.id">{{data.name}}</option>
+                    </select>
+                    <span *ngIf="videoForm.controls.video_category_id.errors && videoForm.controls.video_category_id.errors.required && isSubmited" [ngStyle]="{'float':'pull-right','color':'red'}" >
+                        Video Category is required!
+                    </span>
+                </div>
+                
+
+                <div class="form-group">
+                    <label for="exampleInputEmail1">Point</label>
+                    <input type="text" class="form-control" formControlName="point">
+                    <span *ngIf="videoForm.controls.point.errors && videoForm.controls.point.errors.required && isSubmited" [ngStyle]="{'float':'pull-right','color':'red'}" >
+                        Point is required!
+                    </span>
+                </div>
+                
+
+                <label for="exampleInputEmail1" [ngStyle]="{'color':videoForm.controls.is_trending.errors && videoForm.controls.is_trending.errors.required && isSubmited?'red':''}">Is Trending</label>
+                <div class="radio">
+                    <label>
+                      <input type="radio" value="1"  formControlName="is_trending">Yes
+                    </label>&nbsp;&nbsp;
+                    <label>
+                        <input type="radio" value="0"  formControlName="is_trending"> No
+                    </label>
+                    <span *ngIf="videoForm.controls.is_trending.errors && videoForm.controls.is_trending.errors.required && isSubmited" [ngStyle]="{'float':'pull-right','color':'red'}" >
+                        <br>Is Trending is required!
+                    </span>
+                </div>
+                
+
+                <input type="hidden" class="form-control" formControlName="user_id">
+                <input type="hidden" class="form-control" formControlName="id"><br>
+                <div class="form-group">
+                    <label for="name">Thumbnail Image:</label>
+                      <div class="row">
+                            <div class="col-md-4">
+                              <input type="file" appImageValidation (imageRetrieveData)="imageRetrieveData($event)" imageInputName="thumbnail_img" >
+                              <span *ngIf="thumbnail_error" [ngStyle]="{'float':'pull-right','color':'red'}" >
+                                Only files with the following extensions are allowed :jpg, jpeg, png, gif
+                              </span> 
+                            </div>
+                            <div class="col-md-4">
+                                <img [src] = "sanitizer.bypassSecurityTrustResourceUrl(preview_thumbnail)"  class="img-responsive thumbnail" style="width:auto; height: 200px;">
+                            </div>
+                            <div class="col-md-4"></div>
+                      </div>    
+                </div>
+
+                <div class="form-group">
+                    <label for="name">Url:</label>
+                      <div class="row">
+                          <div class="col-md-12">
+                              <input type="file" appVideoValidation (videoRetrieveData)="videoRetrieveData($event)" videoInputName="video_url">
+                              <span *ngIf="video_url_error" [ngStyle]="{'float':'pull-right','color':'red'}" >
+                                Only files with the following extensions are allowed :avi, mp4, 3gp, mpeg, mpg,mov, mp3, flv, wmvf
+                              </span> 
+                              <span *ngIf="video_name">
+                                <br> <b>Video  - {{video_name}}</b>
+                              </span >
+                          </div>
+                          
+                      </div>    
+                </div>
+            </div>
+            <div class="box-footer">
+                <button type="submit" class="btn btn-primary">Submit</button>
+            </div>
+        </form>
+    </div>   
+</section>  
+
+

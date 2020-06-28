@@ -1,0 +1,59 @@
+<section class="content-header">
+    <h4>
+        Withdraw Money
+    </h4>
+    <ol class="breadcrumb">
+        <li><a routerLink="/"><i class="fa fa-dashboard"></i> Dashboard</a></li>
+        <li class="active">Withdraw Money</li>
+    </ol>
+</section>
+<section class="content">
+    <div class="row">
+        <div class="col-xs-12">
+            <div class="box">
+                <div class="box-header">
+                    <h3 class="box-title">Withdraw Money</h3>
+                </div>
+                <div class="box-body table-responsive no-padding">
+                    <p style="float:right;"> Search: <input type="text" #search_el (keyup)="contentSearch()"></p>
+                    <table id="example2" class="table table-bordered table-hover dataTable table-responsive" role="grid" aria-describedby="example2_info">
+                        <thead>
+                            <tr role="row">
+                                <th>ID</th>
+                                <th>Name</th>
+                                <th>Email</th>
+                                <th>Paytm Number</th>
+                                <th>Point Requested</th>
+                                <th>Amount Requested</th>
+                                <th>Status</th>
+                                <th >Change Status</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let data of withdrawData|filter:search_val| paginate: { itemsPerPage: 6, currentPage: page }">
+                                <td>{{data.id}}</td>
+                                <td>{{data.name | custom_uppercase:{type:'firstLetter'} }}</td>
+                                <td>{{data.email}}</td>
+                                <td>{{data.paytm_number}}</td>
+                                <td>{{data.point_requested}}</td>
+                                <td>{{data.amount_requested | currency:'INR' }}</td>
+                                <td>{{data.status | custom_uppercase:{type:'firstLetter'} }}</td>
+                                <td>
+                                    <select #ele  (change)="change(ele.value,data.id)">
+                                        <option value="in progress" [selected]="data.status == 'in progress' ">In Progress</option>
+                                        <option value="accept" [selected]="data.status == 'accept' ">Accept</option>
+                                        <option value="reject" [selected]="data.status == 'reject' ">Reject</option>
+                                    </select>    
+                                </td>
+                            </tr>    
+                        </tbody>
+                    </table>
+                    <div style="float:right;text-align:center;padding-top: 10px;"><pagination-controls (pageChange)="page = $event"></pagination-controls></div>
+                </div>
+            </div>    
+       </div>
+    </div>
+    
+    
+    
+</section>       

@@ -1,0 +1,52 @@
+<section class="content-header">
+    <h4>
+        Users
+    </h4>
+    <ol class="breadcrumb">
+        <li><a routerLink="/"><i class="fa fa-dashboard"></i> Dashboard</a></li>
+        <li class="active">Users</li>
+    </ol>
+</section>
+<section class="content">
+    
+    <div class="row">
+        <div class="col-xs-12">
+            <div class="box">
+                <div class="box-header">
+                    <h3 class="box-title">User List</h3>
+                </div>
+                <div class="box-body table-responsive no-padding">
+                    <p style="float:right;"> Search: <input type="text" #search_el (keyup)="contentSearch()"></p>
+                    <table id="example2" class="table table-bordered table-hover" role="grid" aria-describedby="example2_info">
+                        <thead>
+                            <tr role="row">
+                                <th>ID</th>
+                                <th>Name</th>
+                                <th>Email</th>
+                                <th>Mobile</th>
+                                <th>Address</th>
+                                <th>Points</th>
+                                <th>Created At</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let user_data of users|filter:search_val| paginate: { itemsPerPage: 6, currentPage: page }">
+                                <td>{{user_data.id}}</td>
+                                <td>{{user_data.name | custom_uppercase:{type:'firstLetter'} }}</td>
+                                <td>{{user_data.email}}</td>
+                                <td>{{user_data.mobile}}</td>
+                                <td>{{user_data.address}}</td>
+                                <td>{{user_data.points}}</td>
+                                <td>{{user_data.created_at  }}</td>
+                            </tr>    
+                        </tbody>
+                    </table>
+                    <div style="float:right;text-align:center;padding-top: 10px;"><pagination-controls (pageChange)="page = $event"></pagination-controls></div>
+                </div>
+            </div>    
+       </div>
+    </div>
+    
+</section>       
+
+    

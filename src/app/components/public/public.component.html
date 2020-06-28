@@ -1,0 +1,11 @@
+<div class="login-box">
+    <div class="login-logo">
+      <a routerLink="/"><b>Admin Panel</b></a>
+    </div>
+    <!-- /.login-logo -->
+    <div class="login-box-body">
+      <p class="login-box-msg">{{title | custom_uppercase:{type:'firstLetterOfEachWord'} }}</p>
+      <router-outlet></router-outlet>
+    </div>
+    <!-- /.login-box-body -->
+</div>

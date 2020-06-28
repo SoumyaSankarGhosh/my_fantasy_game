@@ -1,0 +1,71 @@
+<section class="content">
+    <div class="box box-default" *ngIf="form_setup">
+        <div class="box-header with-border">
+        <h3 class="box-title">Image</h3>
+        </div>
+        
+        <form role="form" [formGroup]="imageForm" (ngSubmit)="submit()">
+            <div class="box-body">
+                <div class="form-group">
+                    <label for="exampleInputEmail1" [ngStyle]="{'color':imageForm.controls.image_category_id.errors && imageForm.controls.image_category_id.errors.required && isSubmited?'red':''}">Image Category</label>
+                    <select formControlName="image_category_id" class="form-control" [ngStyle]="{'border-color':imageForm.controls.image_category_id.errors && imageForm.controls.image_category_id.errors.required && isSubmited?'red':''}">
+                        <option value="">Select Image Category</option>
+                        <option *ngFor="let data of image_categories" [value]="data.id">{{data.name}}</option>
+                    </select>
+                    <span *ngIf="imageForm.controls.image_category_id.errors && imageForm.controls.image_category_id.errors.required && isSubmited" [ngStyle]="{'float':'pull-right','color':'red'}" >
+                        Image Category is required!
+                    </span>
+                </div>
+                
+
+                <div class="form-group">
+                    <label for="exampleInputEmail1">Point</label>
+                    <input type="text" class="form-control" formControlName="point">
+                    <span *ngIf="imageForm.controls.point.errors && imageForm.controls.point.errors.required && isSubmited" [ngStyle]="{'float':'pull-right','color':'red'}" >
+                        Point is required!
+                    </span>
+                </div>
+                
+
+                <label for="exampleInputEmail1" [ngStyle]="{'color':imageForm.controls.is_trending.errors && imageForm.controls.is_trending.errors.required && isSubmited?'red':''}">Is Trending</label>
+                <div class="radio">
+                    <label>
+                      <input type="radio" value="1"  formControlName="is_trending">Yes
+                    </label>&nbsp;&nbsp;
+                    <label>
+                        <input type="radio" value="0"  formControlName="is_trending"> No
+                    </label>
+                    <span *ngIf="imageForm.controls.is_trending.errors && imageForm.controls.is_trending.errors.required && isSubmited" [ngStyle]="{'float':'pull-right','color':'red'}" >
+                        <br>Is Trending is required!
+                    </span>
+                </div>
+                
+
+                <input type="hidden" class="form-control" formControlName="user_id">
+                <input type="hidden" class="form-control" formControlName="id"><br>
+                <div class="form-group">
+                    <label for="name">Image:</label>
+                      <div class="row">
+                            <div class="col-md-4">
+                              <input type="file" appImageValidation (imageRetrieveData)="imageRetrieveData($event)" imageInputName="image" >
+                              <span *ngIf="image_error" [ngStyle]="{'float':'pull-right','color':'red'}" >
+                                Only files with the following extensions are allowed :jpg, jpeg, png, gif
+                              </span> 
+                            </div>
+                            <div class="col-md-4">
+                                <img [src] = "sanitizer.bypassSecurityTrustResourceUrl(preview_image)"  class="img-responsive thumbnail" style="width:auto; height: 200px;">
+                            </div>
+                            <div class="col-md-4"></div>
+                      </div>    
+                </div>
+
+                
+            </div>
+            <div class="box-footer">
+                <button type="submit" class="btn btn-primary">Submit</button>
+            </div>
+        </form>
+    </div>   
+</section>  
+
+

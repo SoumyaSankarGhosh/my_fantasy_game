@@ -1,0 +1,53 @@
+<section class="content-header">
+    <h4>
+        Image Category
+        <!-- <small>Control panel</small> -->
+    </h4>
+    <ol class="breadcrumb">
+        <li><a routerLink="/"><i class="fa fa-dashboard"></i> Dashboard</a></li>
+        <li class="active">Image Category</li>
+    </ol>
+</section>
+<section class="content">
+    
+    <div class="row">
+        <div class="col-xs-12">
+            <div class="box">
+                <div class="box-header">
+                    <h3 class="box-title">Image Category List</h3>
+                    <p style="float:right;"><button  class="btn bg-purple btn-flat margin" (click)="addModal()">Add Image Category</button></p>
+                </div>
+                <div class="box-body table-responsive no-padding">
+                    <p style="float:right;"> Search: <input type="text" #search_el (keyup)="contentSearch()"></p>
+                    <table id="example2" class="table table-bordered table-hover dataTable table-responsive" role="grid" aria-describedby="example2_info">
+                        <thead>
+                            <tr role="row">
+                                <th>ID</th>
+                                <th>Name</th>
+                                <th>Icon</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let image_category_data of image_categories|filter:search_val| paginate: { itemsPerPage: 6, currentPage: page }">
+                                <td>{{image_category_data.id}}</td>
+                                <td>{{image_category_data.name}}</td>
+                                <td>
+                                    <div class="text-center">
+                                        <img [src]="sanitizer.bypassSecurityTrustResourceUrl(image_category_image_url+image_category_data.icon)" style="height:100px;width:auto">
+                                    </div>
+                                </td>
+                                
+                                <td><button  class="btn btn-warning btn-xs" (click)="editModal(image_category_data)"><i class="fa fa-fw fa-edit"></i></button> &nbsp; <button  class="btn btn-danger btn-xs" (click)="delete(image_category_data.id)"><i class="fa fa-fw fa-trash"></i></button></td>
+                            </tr>    
+                        </tbody>
+                    </table>
+                    <div style="float:right;text-align:center;padding-top: 10px;"><pagination-controls (pageChange)="page = $event"></pagination-controls></div>
+                </div>
+            </div>    
+       </div>
+    </div>
+
+    <app-image-category-modal [modalPassData]="image_category" (modalRetrieveData)="modalRetrieveData($event)" (dataTableRefresh) ="dataTableRefresh($event)"> </app-image-category-modal>
+    
+</section>       
