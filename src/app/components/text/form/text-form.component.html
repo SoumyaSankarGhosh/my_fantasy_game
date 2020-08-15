@@ -64,7 +64,21 @@
                 <input type="hidden" class="form-control" formControlName="user_id">
                 <input type="hidden" class="form-control" formControlName="id"><br>
                 
-
+                <div class="form-group">
+                    <label for="name">Background Image:</label>
+                      <div class="row">
+                            <div class="col-md-4">
+                              <input type="file" appImageValidation (imageRetrieveData)="imageRetrieveData($event)" imageInputName="image" >
+                              <span *ngIf="image_error" [ngStyle]="{'float':'pull-right','color':'red'}" >
+                                Only files with the following extensions are allowed :jpg, jpeg, png, gif
+                              </span> 
+                            </div>
+                            <div class="col-md-4">
+                                <img [src] = "sanitizer.bypassSecurityTrustResourceUrl(preview_image)"  class="img-responsive thumbnail" style="width:auto; height: 200px;">
+                            </div>
+                            <div class="col-md-4"></div>
+                      </div>    
+                </div>
                 
             </div>
             <div class="box-footer">

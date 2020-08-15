@@ -7,6 +7,7 @@ import { FormBuilder,FormGroup,Validators} from '@angular/forms';
 import { TokenService } from '../../../services/token.service';
 import { ToastrService } from 'ngx-toastr';
 import { AngularEditorConfig } from '@kolkov/angular-editor';
+import { environment } from '../../../../environments/environment';
 
 @Component({
   selector: 'app-text-form',
@@ -20,6 +21,9 @@ export class TextFormComponent implements OnInit {
   text_details:any;
   form_setup:Boolean=false;
   text_categories:any;
+  preview_image:any;
+  image:any;
+  image_error:any=false;
   isSubmited:Boolean=false;
   config: AngularEditorConfig = {
     editable: true,
@@ -59,6 +63,7 @@ export class TextFormComponent implements OnInit {
         content:['',[Validators.required]]
       })
       this.form_setup = true;
+      this.preview_image = '../../../../assets/dist/img/default-50x50.gif';
     }
   }
 
@@ -75,6 +80,11 @@ export class TextFormComponent implements OnInit {
           content:[this.text_details.content,[Validators.required]],
           language:[this.text_details.language,[Validators.required]],
         })
+        if(this.text_details.url){
+          this.preview_image = environment.text_bg_image_url+this.text_details.url;
+        } else {
+          this.preview_image = '../../../../assets/dist/img/default-50x50.gif';
+        }
         this.form_setup = true;
       } else {
         this.router.navigate(['/text'])
@@ -94,7 +104,17 @@ export class TextFormComponent implements OnInit {
     })
   }
 
-
+  imageRetrieveData(data):void{
+    if(data.image){
+      this.preview_image = data.image.previewImageUrl;
+      this.image = data.image.image;
+      if(data.image.image_error){
+        this.image_error = true;
+      } else {
+        this.image_error = false;
+      }
+    }
+  }
   
 
   submit():void{
@@ -102,6 +122,7 @@ export class TextFormComponent implements OnInit {
     if(this.textForm.valid){
       // console.log(this.imageForm.value)
       let formData = new FormData();
+      formData.append('url',this.image);
       formData.append('text_category_id',this.textForm.value.text_category_id);
       formData.append('user_id',this.textForm.value.user_id);
       formData.append('language',this.textForm.value.language);

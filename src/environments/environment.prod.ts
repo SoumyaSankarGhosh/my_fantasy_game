@@ -7,4 +7,5 @@ export const environment = {
   video_thumbnail_img_url:'http://api.myfantasygame.com/uploads/thumbnail_img/',
   image_url:'http://api.myfantasygame.com/uploads/image/',
   text_category_image_url:'http://api.myfantasygame.com/uploads/text_category/',
+  text_bg_image_url:'http://api.myfantasygame.com/uploads/text_bg/',
 };
